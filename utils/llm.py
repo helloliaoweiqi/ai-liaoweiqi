@@ -1,3 +1,4 @@
+DEMO_MODE=Ture
 # -*- coding: utf-8 -*-
 """
 llm.py —— 大模型调用封装模块
