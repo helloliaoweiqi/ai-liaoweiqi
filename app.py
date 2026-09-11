@@ -1,4 +1,4 @@
-#-*-coding: utf-8-*-
+#-*-coding:utf-8-*-
 import os
 import re
 import json
@@ -7,8 +7,8 @@ import uuid
 import streamlit as st
 from utils import llm,prompts,storage
 
-st.write("ok")
-
+st.write(ok!")
+ 
 st.set_page_config(
     page_title="智学伴侣?AI个性化学习助手",
     page_icon="??",
