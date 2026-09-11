@@ -1,16 +1,36 @@
 # -*- coding: utf-8 -*-
+"""
+app.py —— 智学伴侣 主程序（Streamlit 网页入口）
+
+运行方式：
+    streamlit run app.py
+
+页面结构：
+    🏠 首页       show_home()          欢迎语、学习统计、快捷入口
+    📸 AI错题本   show_mistake_book()  上传错题 AI 分析 / 我的错题本
+    👤 学习画像   show_profile()       对话式构建画像 + 手动编辑表单
+    📚 资源推荐   show_resources()     根据画像生成个性化学习资源
+
+说明：
+    未配置 OPENAI_API_KEY 时自动进入「演示模式」，
+    所有 AI 回复由 utils/llm.py 返回内置模拟数据，保证开箱即跑。
+"""
+
 import os
 import re
 import json
 import uuid
 
 import streamlit as st
+
 from utils import llm, prompts, storage
 
+# ---------------- 页面基础配置 ----------------
 st.set_page_config(
-    page_title="智学伴侣‑AI个性化学习助手",
-    page_icon="📚",
-    layout="wide"
+    page_title="智学伴侣 - AI个性化学习助手",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
 PAGES = ["🏠 首页", "📸 AI错题本", "👤 学习画像", "📚 资源推荐"]
