@@ -16,18 +16,18 @@ st.set_page_config(
     layout="wide"
 )
 
-PAGES = ["?? 首页", "?? AI错题本", "?? 学习画像", "?? 资源推荐"]
+PAGES = [" 首页", " AI错题本", " 学习画像", " 资源推荐"]
 SUBJECTS = ["数学", "物理", "化学", "生物", "语文", "英语", "历史", "地理", "政治", "信息技术"]
 
 # 画像对话的 AI 开场白
 _GREETING = (
-    "你好呀！我是你的专属学习伴侣 ?? 很高兴认识你！\n\n"
+    "你好呀！我是你的专属学习伴侣  很高兴认识你！\n\n"
     "为了帮你定制更合适的学习计划，我想先了解一些你的情况：\n"
-    "1?? 你现在处于什么学段？（高一 / 高二 / 高三 / 大一……）\n"
-    "2?? 最近最重要的学习目标是什么？\n"
-    "3?? 有哪些科目或知识点让你比较头疼？\n"
-    "4?? 你更喜欢哪种学习方式？\n"
-    "5?? 每天大概能安排多少时间学习？\n\n"
+    "1 你现在处于什么学段？（高一 / 高二 / 高三 / 大一……）\n"
+    "2 最近最重要的学习目标是什么？\n"
+    "3 有哪些科目或知识点让你比较头疼？\n"
+    "4 你更喜欢哪种学习方式？\n"
+    "5 每天大概能安排多少时间学习？\n\n"
     "不用一次答完，随便聊，想到什么说什么就行～"
 )
 
@@ -118,13 +118,13 @@ def parse_profile_completion(profile):
 def render_analysis(data):
     """渲染一次错题分析结果：题目、知识点、错因、解析、变式题。"""
     st.divider()
-    st.markdown(f"### ?? 题目")
+    st.markdown(f"###  题目")
     st.markdown(data.get("question", "（未识别到题目）"))
     kps = data.get("knowledge_points", []) or []
     if kps:
-        st.markdown("?? 知识点：" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
+        st.markdown(" 知识点：" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
 
-    st.markdown("### ?? 错误原因")
+    st.markdown("###  错误原因")
     st.info(data.get("error_reason", "暂无"))
 
     st.markdown("### ? 详细解析")
