@@ -10,39 +10,39 @@ from utils import llm,prompts,storage
 st.write("ok")
 
 st.set_page_config(
-    page_title="æ™ºå­¦ä¼´ä¾£â€‘AIä¸ªæ€§åŒ–å­¦ä¹ åŠ©æ‰‹",
-    page_icon="ğŸ“š",
+    page_title="ÖÇÑ§°éÂÂ?AI¸öĞÔ»¯Ñ§Ï°ÖúÊÖ",
+    page_icon="??",
     layout="wide"
 )
 
-PAGES = ["ğŸ  é¦–é¡µ", "ğŸ“¸ AIé”™é¢˜æœ¬", "ğŸ‘¤ å­¦ä¹ ç”»åƒ", "ğŸ“š èµ„æºæ¨è"]
-SUBJECTS = ["æ•°å­¦", "ç‰©ç†", "åŒ–å­¦", "ç”Ÿç‰©", "è¯­æ–‡", "è‹±è¯­", "å†å²", "åœ°ç†", "æ”¿æ²»", "ä¿¡æ¯æŠ€æœ¯"]
+PAGES = ["?? Ê×Ò³", "?? AI´íÌâ±¾", "?? Ñ§Ï°»­Ïñ", "?? ×ÊÔ´ÍÆ¼ö"]
+SUBJECTS = ["ÊıÑ§", "ÎïÀí", "»¯Ñ§", "ÉúÎï", "ÓïÎÄ", "Ó¢Óï", "ÀúÊ·", "µØÀí", "ÕşÖÎ", "ĞÅÏ¢¼¼Êõ"]
 
-# ç”»åƒå¯¹è¯çš„ AI å¼€åœºç™½
+# »­Ïñ¶Ô»°µÄ AI ¿ª³¡°×
 _GREETING = (
-    "ä½ å¥½å‘€ï¼æˆ‘æ˜¯ä½ çš„ä¸“å±å­¦ä¹ ä¼´ä¾£ ğŸ“ å¾ˆé«˜å…´è®¤è¯†ä½ ï¼\n\n"
-    "ä¸ºäº†å¸®ä½ å®šåˆ¶æ›´åˆé€‚çš„å­¦ä¹ è®¡åˆ’ï¼Œæˆ‘æƒ³å…ˆäº†è§£ä¸€äº›ä½ çš„æƒ…å†µï¼š\n"
-    "1ï¸âƒ£ ä½ ç°åœ¨å¤„äºä»€ä¹ˆå­¦æ®µï¼Ÿï¼ˆé«˜ä¸€ / é«˜äºŒ / é«˜ä¸‰ / å¤§ä¸€â€¦â€¦ï¼‰\n"
-    "2ï¸âƒ£ æœ€è¿‘æœ€é‡è¦çš„å­¦ä¹ ç›®æ ‡æ˜¯ä»€ä¹ˆï¼Ÿ\n"
-    "3ï¸âƒ£ æœ‰å“ªäº›ç§‘ç›®æˆ–çŸ¥è¯†ç‚¹è®©ä½ æ¯”è¾ƒå¤´ç–¼ï¼Ÿ\n"
-    "4ï¸âƒ£ ä½ æ›´å–œæ¬¢å“ªç§å­¦ä¹ æ–¹å¼ï¼Ÿ\n"
-    "5ï¸âƒ£ æ¯å¤©å¤§æ¦‚èƒ½å®‰æ’å¤šå°‘æ—¶é—´å­¦ä¹ ï¼Ÿ\n\n"
-    "ä¸ç”¨ä¸€æ¬¡ç­”å®Œï¼Œéšä¾¿èŠï¼Œæƒ³åˆ°ä»€ä¹ˆè¯´ä»€ä¹ˆå°±è¡Œï½"
+    "ÄãºÃÑ½£¡ÎÒÊÇÄãµÄ×¨ÊôÑ§Ï°°éÂÂ ?? ºÜ¸ßĞËÈÏÊ¶Äã£¡\n\n"
+    "ÎªÁË°ïÄã¶¨ÖÆ¸üºÏÊÊµÄÑ§Ï°¼Æ»®£¬ÎÒÏëÏÈÁË½âÒ»Ğ©ÄãµÄÇé¿ö£º\n"
+    "1?? ÄãÏÖÔÚ´¦ÓÚÊ²Ã´Ñ§¶Î£¿£¨¸ßÒ» / ¸ß¶ş / ¸ßÈı / ´óÒ»¡­¡­£©\n"
+    "2?? ×î½ü×îÖØÒªµÄÑ§Ï°Ä¿±êÊÇÊ²Ã´£¿\n"
+    "3?? ÓĞÄÄĞ©¿ÆÄ¿»òÖªÊ¶µãÈÃÄã±È½ÏÍ·ÌÛ£¿\n"
+    "4?? Äã¸üÏ²»¶ÄÄÖÖÑ§Ï°·½Ê½£¿\n"
+    "5?? Ã¿Ìì´ó¸ÅÄÜ°²ÅÅ¶àÉÙÊ±¼äÑ§Ï°£¿\n\n"
+    "²»ÓÃÒ»´Î´ğÍê£¬Ëæ±ãÁÄ£¬Ïëµ½Ê²Ã´ËµÊ²Ã´¾ÍĞĞ¡«"
 )
 
-# ---------------- ç®€æ´ç°ä»£é£æ ¼çš„è‡ªå®šä¹‰æ ·å¼ ----------------
+# ---------------- ¼ò½àÏÖ´ú·ç¸ñµÄ×Ô¶¨ÒåÑùÊ½ ----------------
 st.markdown(
     """
     <style>
-    /* éšè— Streamlit é»˜è®¤èœå•ä¸é¡µè„š */
+    /* Òş²Ø Streamlit Ä¬ÈÏ²Ëµ¥ÓëÒ³½Å */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    /* é¡¶éƒ¨æ¸å˜æ¬¢è¿å¡ç‰‡ */
+    /* ¶¥²¿½¥±ä»¶Ó­¿¨Æ¬ */
     .hero {background: linear-gradient(135deg, #5B7CFA, #8A63F5);
            border-radius: 18px; padding: 2.2rem 2.5rem; margin-bottom: 1.4rem;}
     .hero h1 {color: #ffffff; margin: 0; font-size: 1.85rem; font-weight: 700;}
     .hero p {color: #EAE6FF; margin: .5rem 0 0 0; font-size: 1rem;}
-    /* æ ‡ç­¾èƒ¶å›Š */
+    /* ±êÇ©½ºÄÒ */
     .chip {display: inline-block; padding: .12rem .7rem; border-radius: 999px;
            font-size: .8rem; margin: 0 .3rem .3rem 0; line-height: 1.5;}
     .chip-blue   {background: #E8F0FE; color: #1A56DB;}
@@ -56,15 +56,15 @@ st.markdown(
 
 
 # ============================================================================
-#                              é€šç”¨å°å·¥å…·
+#                              Í¨ÓÃĞ¡¹¤¾ß
 # ============================================================================
 def chip(text, color="blue"):
-    """ç”Ÿæˆä¸€ä¸ª HTML å°æ ‡ç­¾èƒ¶å›Šã€‚"""
+    """Éú³ÉÒ»¸ö HTML Ğ¡±êÇ©½ºÄÒ¡£"""
     return f'<span class="chip chip-{color}">{text}</span>'
 
 
 def go_to(page_name):
-    """ç”Ÿæˆé¡µé¢è·³è½¬å›è°ƒï¼šç‚¹å‡»æŒ‰é’®ååˆ‡æ¢ä¾§è¾¹æ å¯¼èˆªåˆ°æŒ‡å®šé¡µé¢ã€‚"""
+    """Éú³ÉÒ³ÃæÌø×ª»Øµ÷£ºµã»÷°´Å¥ºóÇĞ»»²à±ßÀ¸µ¼º½µ½Ö¸¶¨Ò³Ãæ¡£"""
     def _callback():
         st.session_state["nav_page"] = page_name
     return _callback
@@ -72,27 +72,27 @@ def go_to(page_name):
 
 def extract_json(text):
     """
-    ä»å¤§æ¨¡å‹è¿”å›çš„æ–‡æœ¬ä¸­æå– JSONï¼ˆå…¼å®¹ ```json ä»£ç å—ã€å‰åå¤¹æ‚è¯´æ˜æ–‡å­—ç­‰æƒ…å†µï¼‰ã€‚
+    ´Ó´óÄ£ĞÍ·µ»ØµÄÎÄ±¾ÖĞÌáÈ¡ JSON£¨¼æÈİ ```json ´úÂë¿é¡¢Ç°ºó¼ĞÔÓËµÃ÷ÎÄ×ÖµÈÇé¿ö£©¡£
 
-    è¿”å›:
-        è§£ææˆåŠŸè¿”å› dict / listï¼›å¤±è´¥è¿”å› Noneã€‚
+    ·µ»Ø:
+        ½âÎö³É¹¦·µ»Ø dict / list£»Ê§°Ü·µ»Ø None¡£
     """
     if not text:
         return None
     text = text.strip()
 
-    # 1. ä¼˜å…ˆæå– Markdown ä»£ç å—å†…å®¹
+    # 1. ÓÅÏÈÌáÈ¡ Markdown ´úÂë¿éÄÚÈİ
     m = re.search(r"```(?:json)?\s*(.*?)```", text, re.DOTALL)
     if m:
         text = m.group(1).strip()
 
-    # 2. ç›´æ¥å°è¯•è§£æ
+    # 2. Ö±½Ó³¢ÊÔ½âÎö
     try:
         return json.loads(text)
     except (json.JSONDecodeError, ValueError):
         pass
 
-    # 3. æˆªå–ç¬¬ä¸€ä¸ª { ... } æˆ– [ ... ] å†è¯•
+    # 3. ½ØÈ¡µÚÒ»¸ö { ... } »ò [ ... ] ÔÙÊÔ
     for start_ch, end_ch in (("{", "}"), ("[", "]")):
         s, e = text.find(start_ch), text.rfind(end_ch)
         if s != -1 and e > s:
@@ -104,7 +104,7 @@ def extract_json(text):
 
 
 def parse_profile_completion(profile):
-    """è®¡ç®—ç”»åƒå®Œæˆåº¦ï¼ˆ0~100 çš„æ•´æ•°ï¼‰ã€‚"""
+    """¼ÆËã»­ÏñÍê³É¶È£¨0~100 µÄÕûÊı£©¡£"""
     fields = [
         profile.get("grade"), profile.get("goal"), profile.get("subjects"),
         profile.get("weak_points"), profile.get("strengths"),
@@ -115,31 +115,31 @@ def parse_profile_completion(profile):
 
 
 def render_analysis(data):
-    """æ¸²æŸ“ä¸€æ¬¡é”™é¢˜åˆ†æç»“æœï¼šé¢˜ç›®ã€çŸ¥è¯†ç‚¹ã€é”™å› ã€è§£æã€å˜å¼é¢˜ã€‚"""
+    """äÖÈ¾Ò»´Î´íÌâ·ÖÎö½á¹û£ºÌâÄ¿¡¢ÖªÊ¶µã¡¢´íÒò¡¢½âÎö¡¢±äÊ½Ìâ¡£"""
     st.divider()
-    st.markdown(f"### ğŸ“ é¢˜ç›®")
-    st.markdown(data.get("question", "ï¼ˆæœªè¯†åˆ«åˆ°é¢˜ç›®ï¼‰"))
+    st.markdown(f"### ?? ÌâÄ¿")
+    st.markdown(data.get("question", "£¨Î´Ê¶±ğµ½ÌâÄ¿£©"))
     kps = data.get("knowledge_points", []) or []
     if kps:
-        st.markdown("ğŸ§© çŸ¥è¯†ç‚¹ï¼š" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
+        st.markdown("?? ÖªÊ¶µã£º" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
 
-    st.markdown("### âš ï¸ é”™è¯¯åŸå› ")
-    st.info(data.get("error_reason", "æš‚æ— "))
+    st.markdown("### ?? ´íÎóÔ­Òò")
+    st.info(data.get("error_reason", "ÔİÎŞ"))
 
-    st.markdown("### âœ… è¯¦ç»†è§£æ")
-    st.markdown(data.get("correct_solution", "æš‚æ— "))
+    st.markdown("### ? ÏêÏ¸½âÎö")
+    st.markdown(data.get("correct_solution", "ÔİÎŞ"))
 
     sims = data.get("similar_questions", []) or []
-    st.markdown(f"### ğŸ¯ ä¸¾ä¸€åä¸‰ï¼ˆ{len(sims)} é“å˜å¼é¢˜ï¼‰")
+    st.markdown(f"### ?? ¾ÙÒ»·´Èı£¨{len(sims)} µÀ±äÊ½Ìâ£©")
     for i, q in enumerate(sims, 1):
-        with st.expander(f"å˜å¼é¢˜ {i}ï¼š{str(q.get('question', ''))[:48]}"):
+        with st.expander(f"±äÊ½Ìâ {i}£º{str(q.get('question', ''))[:48]}"):
             st.markdown(q.get("question", ""))
-            st.markdown(f"**ğŸ’¡ æç¤ºï¼š** {q.get('hint', 'â€”â€”')}")
-            st.markdown(f"**ğŸ”‘ å‚è€ƒç­”æ¡ˆï¼š** {q.get('answer', 'â€”â€”')}")
+            st.markdown(f"**?? ÌáÊ¾£º** {q.get('hint', '¡ª¡ª')}")
+            st.markdown(f"**?? ²Î¿¼´ğ°¸£º** {q.get('answer', '¡ª¡ª')}")
 
 
 # ============================================================================
-#                              ğŸ  é¦–é¡µ
+#                              ?? Ê×Ò³
 # ============================================================================
 def show_home():
     profile = storage.load_profile()
@@ -147,107 +147,107 @@ def show_home():
     conversation = storage.load_conversation()
     completion = parse_profile_completion(profile)
 
-    # æ¬¢è¿æ¨ªå¹…
+    # »¶Ó­ºá·ù
     st.markdown(
         """
         <div class="hero">
-            <h1>ğŸ“ æ™ºå­¦ä¼´ä¾£ Â· è®©æ¯ä¸€æ¬¡é”™é¢˜éƒ½æˆä¸ºè¿›æ­¥çš„å°é˜¶</h1>
-            <p>AI é”™é¢˜åˆ†æ Â· ä¸¾ä¸€åä¸‰ Â· å¯¹è¯å¼å­¦ä¹ ç”»åƒ Â· ä¸ªæ€§åŒ–èµ„æºæ¨è</p>
+            <h1>?? ÖÇÑ§°éÂÂ ¡¤ ÈÃÃ¿Ò»´Î´íÌâ¶¼³ÉÎª½ø²½µÄÌ¨½×</h1>
+            <p>AI ´íÌâ·ÖÎö ¡¤ ¾ÙÒ»·´Èı ¡¤ ¶Ô»°Ê½Ñ§Ï°»­Ïñ ¡¤ ¸öĞÔ»¯×ÊÔ´ÍÆ¼ö</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # å­¦ä¹ ç»Ÿè®¡
+    # Ñ§Ï°Í³¼Æ
     c1, c2, c3 = st.columns(3)
-    c1.metric("ğŸ“– é”™é¢˜æ€»æ•°", f"{len(mistakes)} é“")
-    c2.metric("ğŸ‘¤ ç”»åƒå®Œæˆåº¦", f"{completion}%")
+    c1.metric("?? ´íÌâ×ÜÊı", f"{len(mistakes)} µÀ")
+    c2.metric("?? »­ÏñÍê³É¶È", f"{completion}%")
     user_rounds = sum(1 for m in conversation if m.get("role") == "user")
-    c3.metric("ğŸ’¬ ç”»åƒå¯¹è¯è½®æ•°", f"{user_rounds} è½®")
+    c3.metric("?? »­Ïñ¶Ô»°ÂÖÊı", f"{user_rounds} ÂÖ")
 
-    # å¿«æ·å…¥å£
-    st.subheader("ğŸš€ å¿«æ·å…¥å£")
+    # ¿ì½İÈë¿Ú
+    st.subheader("?? ¿ì½İÈë¿Ú")
     b1, b2, b3 = st.columns(3)
-    b1.button("ğŸ“¸ ä¸Šä¼ é”™é¢˜ï¼ŒAI ä¸¾ä¸€åä¸‰", on_click=go_to("ğŸ“¸ AIé”™é¢˜æœ¬"), use_container_width=True)
-    b2.button("ğŸ—£ï¸ å¯¹è¯æ„å»ºæˆ‘çš„å­¦ä¹ ç”»åƒ", on_click=go_to("ğŸ‘¤ å­¦ä¹ ç”»åƒ"), use_container_width=True)
-    b3.button("ğŸ“š è·å–ä¸ªæ€§åŒ–èµ„æºæ¨è", on_click=go_to("ğŸ“š èµ„æºæ¨è"), use_container_width=True)
+    b1.button("?? ÉÏ´«´íÌâ£¬AI ¾ÙÒ»·´Èı", on_click=go_to("?? AI´íÌâ±¾"), use_container_width=True)
+    b2.button("??? ¶Ô»°¹¹½¨ÎÒµÄÑ§Ï°»­Ïñ", on_click=go_to("?? Ñ§Ï°»­Ïñ"), use_container_width=True)
+    b3.button("?? »ñÈ¡¸öĞÔ»¯×ÊÔ´ÍÆ¼ö", on_click=go_to("?? ×ÊÔ´ÍÆ¼ö"), use_container_width=True)
 
-    # æœ€è¿‘é”™é¢˜é¢„è§ˆ
+    # ×î½ü´íÌâÔ¤ÀÀ
     if mistakes:
-        st.subheader("ğŸ•’ æœ€è¿‘æ·»åŠ çš„é”™é¢˜")
+        st.subheader("?? ×î½üÌí¼ÓµÄ´íÌâ")
         for m in reversed(mistakes[-3:]):
             st.markdown(
-                f"- **ã€{m.get('subject', 'æœªçŸ¥')}ã€‘** {str(m.get('question', ''))[:40]}"
-                f"â€¦ï¼ˆ{m.get('created_at', '')}ï¼‰"
+                f"- **¡¾{m.get('subject', 'Î´Öª')}¡¿** {str(m.get('question', ''))[:40]}"
+                f"¡­£¨{m.get('created_at', '')}£©"
             )
     else:
-        st.info("é”™é¢˜æœ¬è¿˜æ˜¯ç©ºçš„ï½ç‚¹å‡»ä¸Šæ–¹ã€ŒğŸ“¸ ä¸Šä¼ é”™é¢˜ã€ï¼Œä½“éªŒ AI åˆ†æ + å˜å¼é¢˜ç”Ÿæˆå§ï¼")
+        st.info("´íÌâ±¾»¹ÊÇ¿ÕµÄ¡«µã»÷ÉÏ·½¡¸?? ÉÏ´«´íÌâ¡¹£¬ÌåÑé AI ·ÖÎö + ±äÊ½ÌâÉú³É°É£¡")
 
 
 # ============================================================================
-#                            ğŸ“¸ AI é”™é¢˜æœ¬
+#                            ?? AI ´íÌâ±¾
 # ============================================================================
 def show_mistake_book():
-    st.subheader("ğŸ“¸ AI é”™é¢˜æœ¬")
-    st.caption("æ‹ç…§ä¸Šä¼ é”™é¢˜ â†’ AI åˆ†æé”™å› å¹¶è¯¦ç»†è§£æ â†’ è‡ªåŠ¨ç”Ÿæˆ 3-5 é“åŒç±»å˜å¼é¢˜")
+    st.subheader("?? AI ´íÌâ±¾")
+    st.caption("ÅÄÕÕÉÏ´«´íÌâ ¡ú AI ·ÖÎö´íÒò²¢ÏêÏ¸½âÎö ¡ú ×Ô¶¯Éú³É 3-5 µÀÍ¬Àà±äÊ½Ìâ")
     if llm.DEMO_MODE:
-        st.info("ğŸ§ª å½“å‰ä¸º**æ¼”ç¤ºæ¨¡å¼**ï¼šAI åˆ†æç»“æœä¸ºå†…ç½®æ¨¡æ‹Ÿæ•°æ®ï¼›åœ¨ `.env` ä¸­é…ç½® API Key åå³å¯çœŸå®è°ƒç”¨ã€‚")
+        st.info("?? µ±Ç°Îª**ÑİÊ¾Ä£Ê½**£ºAI ·ÖÎö½á¹ûÎªÄÚÖÃÄ£ÄâÊı¾İ£»ÔÚ `.env` ÖĞÅäÖÃ API Key ºó¼´¿ÉÕæÊµµ÷ÓÃ¡£")
 
-    tab_upload, tab_book = st.tabs(["ğŸ“¤ ä¸Šä¼ é”™é¢˜", "ğŸ“– æˆ‘çš„é”™é¢˜æœ¬"])
+    tab_upload, tab_book = st.tabs(["?? ÉÏ´«´íÌâ", "?? ÎÒµÄ´íÌâ±¾"])
 
-    # ---------------- Tab 1ï¼šä¸Šä¼ é”™é¢˜ ----------------
+    # ---------------- Tab 1£ºÉÏ´«´íÌâ ----------------
     with tab_upload:
         col_img, col_text = st.columns(2)
         with col_img:
-            uploaded = st.file_uploader("ä¸Šä¼ é”™é¢˜å›¾ç‰‡ï¼ˆæ”¯æŒ jpg / pngï¼‰", type=["jpg", "jpeg", "png"])
+            uploaded = st.file_uploader("ÉÏ´«´íÌâÍ¼Æ¬£¨Ö§³Ö jpg / png£©", type=["jpg", "jpeg", "png"])
             if uploaded is not None:
-                st.image(uploaded, caption="é¢˜ç›®å›¾ç‰‡é¢„è§ˆ", use_container_width=True)
+                st.image(uploaded, caption="ÌâÄ¿Í¼Æ¬Ô¤ÀÀ", use_container_width=True)
         with col_text:
             manual_text = st.text_area(
-                "æˆ–æ‰‹åŠ¨è¾“å…¥é¢˜ç›®æ–‡æœ¬ï¼ˆå¯é€‰ï¼Œä½œä¸ºå¤‡é€‰ï¼‰",
+                "»òÊÖ¶¯ÊäÈëÌâÄ¿ÎÄ±¾£¨¿ÉÑ¡£¬×÷Îª±¸Ñ¡£©",
                 height=120,
-                placeholder="ä¾‹å¦‚ï¼šå·²çŸ¥å‡½æ•° f(x)=xÂ²-2ax+3 åœ¨åŒºé—´ (-âˆ,2] ä¸Šå•è°ƒé€’å‡ï¼Œæ±‚ a çš„å–å€¼èŒƒå›´â€¦",
+                placeholder="ÀıÈç£ºÒÑÖªº¯Êı f(x)=x2-2ax+3 ÔÚÇø¼ä (-¡Ş,2] ÉÏµ¥µ÷µİ¼õ£¬Çó a µÄÈ¡Öµ·¶Î§¡­",
             )
-            subject = st.selectbox("é€‰æ‹©ç§‘ç›®", SUBJECTS, index=0)
+            subject = st.selectbox("Ñ¡Ôñ¿ÆÄ¿", SUBJECTS, index=0)
 
-        analyze_clicked = st.button("ğŸ” AI åˆ†æå¹¶ç”Ÿæˆå˜å¼é¢˜", type="primary", use_container_width=True)
+        analyze_clicked = st.button("?? AI ·ÖÎö²¢Éú³É±äÊ½Ìâ", type="primary", use_container_width=True)
 
         if analyze_clicked:
             if uploaded is None and not manual_text.strip():
-                st.warning("è¯·å…ˆä¸Šä¼ é¢˜ç›®å›¾ç‰‡ï¼Œæˆ–è¾“å…¥é¢˜ç›®æ–‡æœ¬ï½")
+                st.warning("ÇëÏÈÉÏ´«ÌâÄ¿Í¼Æ¬£¬»òÊäÈëÌâÄ¿ÎÄ±¾¡«")
             else:
                 profile = storage.load_profile()
                 base_prompt = prompts.build_mistake_analysis_prompt(profile, subject=subject)
-                with st.spinner("AI æ­£åœ¨åˆ†æé”™é¢˜å¹¶ç”Ÿæˆå˜å¼é¢˜ï¼Œè¯·ç¨å€™â€¦"):
+                with st.spinner("AI ÕıÔÚ·ÖÎö´íÌâ²¢Éú³É±äÊ½Ìâ£¬ÇëÉÔºò¡­"):
                     try:
                         if uploaded is not None:
-                            # ä¼˜å…ˆä½¿ç”¨å›¾ç‰‡èµ°å¤šæ¨¡æ€è¯†åˆ«
+                            # ÓÅÏÈÊ¹ÓÃÍ¼Æ¬×ß¶àÄ£Ì¬Ê¶±ğ
                             raw = llm.chat_with_image(base_prompt, uploaded.getvalue())
                         else:
-                            # å¤‡é€‰ï¼šç›´æ¥æŠŠé¢˜ç›®æ–‡æœ¬äº¤ç»™å¯¹è¯æ¨¡å‹
+                            # ±¸Ñ¡£ºÖ±½Ó°ÑÌâÄ¿ÎÄ±¾½»¸ø¶Ô»°Ä£ĞÍ
                             raw = llm.chat([
-                                {"role": "user", "content": base_prompt + "\n\né¢˜ç›®æ–‡æœ¬ï¼š\n" + manual_text.strip()}
+                                {"role": "user", "content": base_prompt + "\n\nÌâÄ¿ÎÄ±¾£º\n" + manual_text.strip()}
                             ])
-                    except Exception as e:  # ç½‘ç»œå¼‚å¸¸ / æ¥å£æŠ¥é”™ç­‰
-                        st.error(f"AI è°ƒç”¨å¤±è´¥ï¼š{e}")
+                    except Exception as e:  # ÍøÂçÒì³£ / ½Ó¿Ú±¨´íµÈ
+                        st.error(f"AI µ÷ÓÃÊ§°Ü£º{e}")
                         raw = None
 
                 if raw:
                     data = extract_json(raw)
                     if not data:
-                        st.error("AI è¿”å›çš„å†…å®¹è§£æå¤±è´¥ï¼Œè¯·é‡è¯•ä¸€æ¬¡ã€‚")
-                        with st.expander("æŸ¥çœ‹ AI åŸå§‹è¿”å›"):
+                        st.error("AI ·µ»ØµÄÄÚÈİ½âÎöÊ§°Ü£¬ÇëÖØÊÔÒ»´Î¡£")
+                        with st.expander("²é¿´ AI Ô­Ê¼·µ»Ø"):
                             st.code(str(raw))
                     else:
-                        # ç»“æœå­˜å…¥ session_stateï¼Œä¿è¯åç»­æ“ä½œï¼ˆå¦‚ä¿å­˜ï¼‰æ—¶é¡µé¢ä¸ä¸¢
+                        # ½á¹û´æÈë session_state£¬±£Ö¤ºóĞø²Ù×÷£¨Èç±£´æ£©Ê±Ò³Ãæ²»¶ª
                         st.session_state["last_analysis"] = data
                         st.session_state["last_analysis_subject"] = subject
                         st.session_state["last_analysis_image"] = uploaded.getvalue() if uploaded is not None else None
 
-        # å±•ç¤ºæœ€è¿‘ä¸€æ¬¡åˆ†æç»“æœï¼ˆåˆ·æ–°/ä¿å­˜åä¾ç„¶å¯è§ï¼‰
+        # Õ¹Ê¾×î½üÒ»´Î·ÖÎö½á¹û£¨Ë¢ĞÂ/±£´æºóÒÀÈ»¿É¼û£©
         if st.session_state.get("last_analysis"):
             render_analysis(st.session_state["last_analysis"])
-            if st.button("ğŸ’¾ ä¿å­˜åˆ°é”™é¢˜æœ¬", type="secondary", use_container_width=True):
+            if st.button("?? ±£´æµ½´íÌâ±¾", type="secondary", use_container_width=True):
                 analysis = st.session_state["last_analysis"]
                 mid = uuid.uuid4().hex[:12]
                 img_path = None
@@ -256,125 +256,125 @@ def show_mistake_book():
                     img_path = storage.save_mistake_image(img_bytes, mid)
                 storage.add_mistake({
                     "id": mid,
-                    "subject": analysis.get("subject") or st.session_state.get("last_analysis_subject", "æœªåˆ†ç±»"),
+                    "subject": analysis.get("subject") or st.session_state.get("last_analysis_subject", "Î´·ÖÀà"),
                     "question": analysis.get("question", ""),
                     "knowledge_points": analysis.get("knowledge_points", []),
                     "error_reason": analysis.get("error_reason", ""),
                     "correct_solution": analysis.get("correct_solution", ""),
                     "similar_questions": analysis.get("similar_questions", []),
-                    "source": "å›¾ç‰‡ä¸Šä¼ " if img_bytes else "æ–‡æœ¬è¾“å…¥",
+                    "source": "Í¼Æ¬ÉÏ´«" if img_bytes else "ÎÄ±¾ÊäÈë",
                     "image_path": img_path,
                 })
-                # æ¸…ç©ºæš‚å­˜ï¼Œé¿å…é‡å¤ä¿å­˜
+                # Çå¿ÕÔİ´æ£¬±ÜÃâÖØ¸´±£´æ
                 for key in ("last_analysis", "last_analysis_subject", "last_analysis_image"):
                     st.session_state.pop(key, None)
-                st.success("âœ… å·²ä¿å­˜åˆ°é”™é¢˜æœ¬ï¼åˆ‡åˆ°ã€ŒğŸ“– æˆ‘çš„é”™é¢˜æœ¬ã€å³å¯æŸ¥çœ‹ã€‚")
+                st.success("? ÒÑ±£´æµ½´íÌâ±¾£¡ÇĞµ½¡¸?? ÎÒµÄ´íÌâ±¾¡¹¼´¿É²é¿´¡£")
 
-    # ---------------- Tab 2ï¼šæˆ‘çš„é”™é¢˜æœ¬ ----------------
+    # ---------------- Tab 2£ºÎÒµÄ´íÌâ±¾ ----------------
     with tab_book:
         mistakes = storage.load_mistakes()
         if not mistakes:
-            st.info("é”™é¢˜æœ¬è¿˜æ˜¯ç©ºçš„ï½å…ˆå»ã€ŒğŸ“¤ ä¸Šä¼ é”™é¢˜ã€ä½“éªŒ AI åˆ†æå§ï¼")
+            st.info("´íÌâ±¾»¹ÊÇ¿ÕµÄ¡«ÏÈÈ¥¡¸?? ÉÏ´«´íÌâ¡¹ÌåÑé AI ·ÖÎö°É£¡")
         else:
-            # æŒ‰ç§‘ç›®ç­›é€‰
-            subject_options = ["å…¨éƒ¨"] + sorted({m.get("subject", "æœªçŸ¥") for m in mistakes})
-            sel = st.selectbox("æŒ‰ç§‘ç›®ç­›é€‰", subject_options)
-            shown = [m for m in mistakes if sel == "å…¨éƒ¨" or m.get("subject") == sel]
-            shown = list(reversed(shown))  # æœ€æ–°æ·»åŠ çš„æ’å‰é¢
-            st.caption(f"å…± {len(shown)} é“é”™é¢˜")
+            # °´¿ÆÄ¿É¸Ñ¡
+            subject_options = ["È«²¿"] + sorted({m.get("subject", "Î´Öª") for m in mistakes})
+            sel = st.selectbox("°´¿ÆÄ¿É¸Ñ¡", subject_options)
+            shown = [m for m in mistakes if sel == "È«²¿" or m.get("subject") == sel]
+            shown = list(reversed(shown))  # ×îĞÂÌí¼ÓµÄÅÅÇ°Ãæ
+            st.caption(f"¹² {len(shown)} µÀ´íÌâ")
 
             for m in shown:
-                title = str(m.get("question", ""))[:38] or "ï¼ˆæ— é¢˜ç›®æ–‡æœ¬ï¼‰"
-                with st.expander(f"ã€{m.get('subject', 'æœªçŸ¥')}ã€‘{title}â€¦ï¼ˆ{m.get('created_at', '')}ï¼‰"):
-                    # åŸé¢˜å›¾ç‰‡ï¼ˆè‹¥æœ‰ï¼‰
+                title = str(m.get("question", ""))[:38] or "£¨ÎŞÌâÄ¿ÎÄ±¾£©"
+                with st.expander(f"¡¾{m.get('subject', 'Î´Öª')}¡¿{title}¡­£¨{m.get('created_at', '')}£©"):
+                    # Ô­ÌâÍ¼Æ¬£¨ÈôÓĞ£©
                     img_path = m.get("image_path")
                     if img_path and os.path.exists(img_path):
-                        st.image(img_path, caption="åŸé¢˜å›¾ç‰‡", width=320)
+                        st.image(img_path, caption="Ô­ÌâÍ¼Æ¬", width=320)
                     kps = m.get("knowledge_points", []) or []
                     if kps:
-                        st.markdown("ğŸ§© çŸ¥è¯†ç‚¹ï¼š" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
-                    st.markdown("**âš ï¸ é”™è¯¯åŸå› **")
-                    st.info(m.get("error_reason", "æš‚æ— "))
-                    st.markdown("**âœ… è¯¦ç»†è§£æ**")
-                    st.markdown(m.get("correct_solution", "æš‚æ— "))
+                        st.markdown("?? ÖªÊ¶µã£º" + "".join(chip(k, "purple") for k in kps), unsafe_allow_html=True)
+                    st.markdown("**?? ´íÎóÔ­Òò**")
+                    st.info(m.get("error_reason", "ÔİÎŞ"))
+                    st.markdown("**? ÏêÏ¸½âÎö**")
+                    st.markdown(m.get("correct_solution", "ÔİÎŞ"))
                     for i, q in enumerate(m.get("similar_questions", []) or [], 1):
-                        with st.expander(f"å˜å¼é¢˜ {i}ï¼š{str(q.get('question', ''))[:36]}"):
+                        with st.expander(f"±äÊ½Ìâ {i}£º{str(q.get('question', ''))[:36]}"):
                             st.markdown(q.get("question", ""))
-                            st.markdown(f"**ğŸ’¡ æç¤ºï¼š** {q.get('hint', 'â€”â€”')}")
-                            st.markdown(f"**ğŸ”‘ å‚è€ƒç­”æ¡ˆï¼š** {q.get('answer', 'â€”â€”')}")
-                    if st.button("ğŸ—‘ï¸ åˆ é™¤è¿™é“é”™é¢˜", key=f"del_{m.get('id')}"):
+                            st.markdown(f"**?? ÌáÊ¾£º** {q.get('hint', '¡ª¡ª')}")
+                            st.markdown(f"**?? ²Î¿¼´ğ°¸£º** {q.get('answer', '¡ª¡ª')}")
+                    if st.button("??? É¾³ıÕâµÀ´íÌâ", key=f"del_{m.get('id')}"):
                         storage.delete_mistake(m.get("id"))
                         st.rerun()
 
 
 # ============================================================================
-#                             ğŸ‘¤ å­¦ä¹ ç”»åƒ
+#                             ?? Ñ§Ï°»­Ïñ
 # ============================================================================
 def show_profile():
-    st.subheader("ğŸ‘¤ å­¦ä¹ ç”»åƒ")
+    st.subheader("?? Ñ§Ï°»­Ïñ")
     profile = storage.load_profile()
 
-    # æ“ä½œæˆåŠŸæç¤ºï¼ˆé…åˆ rerun æ˜¾ç¤ºä¸€æ¬¡ï¼‰
+    # ²Ù×÷³É¹¦ÌáÊ¾£¨ÅäºÏ rerun ÏÔÊ¾Ò»´Î£©
     if st.session_state.get("profile_saved_msg"):
         st.success(st.session_state.pop("profile_saved_msg"))
 
-    # ---------------- é¡¶éƒ¨ï¼šå½“å‰ç”»åƒæ¦‚è§ˆ ----------------
+    # ---------------- ¶¥²¿£ºµ±Ç°»­Ïñ¸ÅÀÀ ----------------
     if profile.get("completed"):
-        st.markdown("#### å½“å‰ç”»åƒ")
+        st.markdown("#### µ±Ç°»­Ïñ")
         c1, c2, c3 = st.columns(3)
-        c1.metric("ğŸ“ å­¦æ®µ", profile.get("grade") or "â€”")
-        c2.metric("ğŸ¯ å­¦ä¹ ç›®æ ‡", profile.get("goal") or "â€”")
-        c3.metric("â° æ¯æ—¥å¯ç”¨æ—¶é—´", f"{profile.get('daily_minutes', 0)} åˆ†é’Ÿ")
+        c1.metric("?? Ñ§¶Î", profile.get("grade") or "¡ª")
+        c2.metric("?? Ñ§Ï°Ä¿±ê", profile.get("goal") or "¡ª")
+        c3.metric("? Ã¿ÈÕ¿ÉÓÃÊ±¼ä", f"{profile.get('daily_minutes', 0)} ·ÖÖÓ")
         r1, r2 = st.columns(2)
         r1.markdown(
-            "ğŸ“˜ å­¦ä¹ ç§‘ç›®ï¼š" + ("".join(chip(s, "blue") for s in profile.get("subjects", [])) or "â€”"),
+            "?? Ñ§Ï°¿ÆÄ¿£º" + ("".join(chip(s, "blue") for s in profile.get("subjects", [])) or "¡ª"),
             unsafe_allow_html=True,
         )
         r1.markdown(
-            "âš ï¸ è–„å¼±ç§‘ç›®ï¼š" + ("".join(chip(s, "orange") for s in profile.get("weak_points", [])) or "â€”"),
+            "?? ±¡Èõ¿ÆÄ¿£º" + ("".join(chip(s, "orange") for s in profile.get("weak_points", [])) or "¡ª"),
             unsafe_allow_html=True,
         )
         r2.markdown(
-            "ğŸ’ª ä¼˜åŠ¿ï¼š" + ("".join(chip(s, "green") for s in profile.get("strengths", [])) or "â€”"),
+            "?? ÓÅÊÆ£º" + ("".join(chip(s, "green") for s in profile.get("strengths", [])) or "¡ª"),
             unsafe_allow_html=True,
         )
-        r2.markdown(f"ğŸ’¡ å­¦ä¹ åå¥½ï¼š{profile.get('preferences') or 'â€”'}")
+        r2.markdown(f"?? Ñ§Ï°Æ«ºÃ£º{profile.get('preferences') or '¡ª'}")
     else:
-        st.info("è¿˜æ²¡æœ‰å­¦ä¹ ç”»åƒï½å¯ä»¥é€šè¿‡ä¸‹æ–¹ã€ŒğŸ—£ï¸ å¯¹è¯å¼æ„å»ºã€æˆ–ã€Œâœï¸ æ‰‹åŠ¨ç¼–è¾‘ã€åˆ›å»ºï¼Œ"
-                "ç”»åƒè¶Šå®Œæ•´ï¼ŒAI åˆ†æå’Œæ¨èå°±è¶Šç²¾å‡†ï¼")
+        st.info("»¹Ã»ÓĞÑ§Ï°»­Ïñ¡«¿ÉÒÔÍ¨¹ıÏÂ·½¡¸??? ¶Ô»°Ê½¹¹½¨¡¹»ò¡¸?? ÊÖ¶¯±à¼­¡¹´´½¨£¬"
+                "»­ÏñÔ½ÍêÕû£¬AI ·ÖÎöºÍÍÆ¼ö¾ÍÔ½¾«×¼£¡")
 
-    # ---------------- æ‰‹åŠ¨ç¼–è¾‘è¡¨å•ï¼ˆå¤‡é€‰æ–¹å¼ï¼‰ ---------------
-    with st.expander("âœï¸ æ‰‹åŠ¨ç¼–è¾‘ç”»åƒï¼ˆå¤‡é€‰æ–¹å¼ï¼‰"):
+    # ---------------- ÊÖ¶¯±à¼­±íµ¥£¨±¸Ñ¡·½Ê½£© ---------------
+    with st.expander("?? ÊÖ¶¯±à¼­»­Ïñ£¨±¸Ñ¡·½Ê½£©"):
         with st.form("manual_profile_form"):
-            f_grade = st.text_input("å­¦æ®µ", value=profile.get("grade", ""), placeholder="å¦‚ï¼šé«˜äºŒ / å¤§ä¸€")
+            f_grade = st.text_input("Ñ§¶Î", value=profile.get("grade", ""), placeholder="Èç£º¸ß¶ş / ´óÒ»")
 
             raw_subjects = profile.get("subjects", [])
             safe_subjects = [s for s in raw_subjects if s in SUBJECTS]
-            f_subjects = st.multiselect("å­¦ä¹ ç§‘ç›®", SUBJECTS, default=safe_subjects)
+            f_subjects = st.multiselect("Ñ§Ï°¿ÆÄ¿", SUBJECTS, default=safe_subjects)
 
-            f_goal = st.text_input("å­¦ä¹ ç›®æ ‡", value=profile.get("goal", ""), placeholder="å¦‚ï¼šé«˜è€ƒæ•°å­¦ 130+")
+            f_goal = st.text_input("Ñ§Ï°Ä¿±ê", value=profile.get("goal", ""), placeholder="Èç£º¸ß¿¼ÊıÑ§ 130+")
 
             raw_weak = profile.get("weak_points", [])
             safe_weak = [s for s in raw_weak if s in SUBJECTS]
-            f_weak = st.multiselect("è–„å¼±ç§‘ç›® / çŸ¥è¯†ç‚¹", SUBJECTS, default=safe_weak)
+            f_weak = st.multiselect("±¡Èõ¿ÆÄ¿ / ÖªÊ¶µã", SUBJECTS, default=safe_weak)
 
             raw_strong = profile.get("strengths", [])
             safe_strong = [s for s in raw_strong if s in SUBJECTS]
-            f_strong = st.multiselect("ä¼˜åŠ¿ç§‘ç›®ï¼çŸ¥è¯†ç‚¹", SUBJECTS, default=safe_strong)
+            f_strong = st.multiselect("ÓÅÊÆ¿ÆÄ¿£¯ÖªÊ¶µã", SUBJECTS, default=safe_strong)
 
             f_pref = st.text_input(
-                "å­¦ä¹ åå¥½",
+                "Ñ§Ï°Æ«ºÃ",
                 value=profile.get("preferences", ""),
-                placeholder="å¦‚ï¼šå–œæ¬¢çœ‹è§†é¢‘è®²è§£ + é€‚é‡åˆ·é¢˜",
+                placeholder="Èç£ºÏ²»¶¿´ÊÓÆµ½²½â + ÊÊÁ¿Ë¢Ìâ",
             )
             f_minutes = st.number_input(
-                "æ¯æ—¥å¯ç”¨å­¦ä¹ æ—¶é—´ï¼ˆåˆ†é’Ÿï¼‰",
+                "Ã¿ÈÕ¿ÉÓÃÑ§Ï°Ê±¼ä£¨·ÖÖÓ£©",
                 min_value=10,
                 max_value=600,
                 value=int(profile.get("daily_minutes") or 60),
                 step=10,
             )
-            submitted = st.form_submit_button("ğŸ’¾ ä¿å­˜ç”»åƒ", type="primary")
+            submitted = st.form_submit_button("?? ±£´æ»­Ïñ", type="primary")
 
             if submitted:
                 storage.save_profile({
@@ -388,151 +388,151 @@ def show_profile():
                     "daily_minutes": int(f_minutes),
                     "completed": True,
                 })
-                st.session_state["profile_saved_msg"] = "âœ… ç”»åƒå·²ä¿å­˜ï¼å¯å‰å¾€ã€ŒğŸ“š èµ„æºæ¨èã€è·å–ä¸ªæ€§åŒ–èµ„æ–™ï½"
+                st.session_state["profile_saved_msg"] = "? »­ÏñÒÑ±£´æ£¡¿ÉÇ°Íù¡¸?? ×ÊÔ´ÍÆ¼ö¡¹»ñÈ¡¸öĞÔ»¯×ÊÁÏ¡«"
                 st.rerun()
 
-    # ---------------- å¯¹è¯å¼æ„å»ºç”»åƒ ----------------
+    # ---------------- ¶Ô»°Ê½¹¹½¨»­Ïñ ----------------
     st.divider()
     head_col, clear_col = st.columns([4, 1])
-    head_col.markdown("#### ğŸ—£ï¸ å¯¹è¯å¼æ„å»ºç”»åƒ")
-    if clear_col.button("ğŸ§¹ æ¸…ç©ºå¯¹è¯", use_container_width=True):
+    head_col.markdown("#### ??? ¶Ô»°Ê½¹¹½¨»­Ïñ")
+    if clear_col.button("?? Çå¿Õ¶Ô»°", use_container_width=True):
         storage.save_conversation([])
         st.session_state.pop("profile_saved_msg", None)
         st.rerun()
 
     conv = storage.load_conversation()
     if not conv:
-        # é¦–æ¬¡è¿›å…¥ï¼šAI å…ˆæ‰“æ‹›å‘¼å¹¶æŠ›å‡ºå¼•å¯¼é—®é¢˜
+        # Ê×´Î½øÈë£ºAI ÏÈ´òÕĞºô²¢Å×³öÒıµ¼ÎÊÌâ
         conv = [{"role": "assistant", "content": _GREETING}]
         storage.save_conversation(conv)
 
-    # æ¸²æŸ“å†å²å¯¹è¯
+    # äÖÈ¾ÀúÊ·¶Ô»°
     for msg in conv:
         with st.chat_message("user" if msg.get("role") == "user" else "assistant"):
             st.markdown(msg.get("content", ""))
 
-    # ç”¨æˆ·è¾“å…¥
-    user_input = st.chat_input("ä¾‹å¦‚ï¼šæˆ‘æ˜¯ä¸€åé«˜äºŒå­¦ç”Ÿï¼Œæ•°å­¦å‡½æ•°éƒ¨åˆ†æ¯”è¾ƒè–„å¼±ï¼Œæ¯å¤©èƒ½å­¦ 1 å°æ—¶â€¦")
+    # ÓÃ»§ÊäÈë
+    user_input = st.chat_input("ÀıÈç£ºÎÒÊÇÒ»Ãû¸ß¶şÑ§Éú£¬ÊıÑ§º¯Êı²¿·Ö±È½Ï±¡Èõ£¬Ã¿ÌìÄÜÑ§ 1 Ğ¡Ê±¡­")
     if user_input:
         conv.append({"role": "user", "content": user_input})
         storage.save_conversation(conv)
 
         system_prompt = prompts.build_chat_system_prompt(profile)
         messages = [{"role": "system", "content": system_prompt}] + conv
-        with st.spinner("AI æ­£åœ¨æ€è€ƒâ€¦"):
+        with st.spinner("AI ÕıÔÚË¼¿¼¡­"):
             try:
                 reply = llm.chat(messages)
             except Exception as e:
-                st.error(f"AI è°ƒç”¨å¤±è´¥ï¼š{e}")
+                st.error(f"AI µ÷ÓÃÊ§°Ü£º{e}")
                 reply = ""
         if reply:
             conv.append({"role": "assistant", "content": reply})
             storage.save_conversation(conv)
         st.rerun()
 
-    # ---------------- ç”Ÿæˆ / æ›´æ–°ç”»åƒæŒ‰é’® ----------------
-    st.markdown("#### ğŸ§© ç”Ÿæˆ / æ›´æ–°ç”»åƒ")
-    st.caption("èŠå¾—å·®ä¸å¤šäº†ï¼Ÿç‚¹å‡»æŒ‰é’®ï¼ŒAI ä¼šä»å¯¹è¯ä¸­æç‚¼å‡ºä½ çš„ä¸“å±å­¦ä¹ ç”»åƒã€‚")
-    if st.button("âœ… æ ¹æ®å¯¹è¯ç”Ÿæˆç”»åƒ", type="primary"):
+    # ---------------- Éú³É / ¸üĞÂ»­Ïñ°´Å¥ ----------------
+    st.markdown("#### ?? Éú³É / ¸üĞÂ»­Ïñ")
+    st.caption("ÁÄµÃ²î²»¶àÁË£¿µã»÷°´Å¥£¬AI »á´Ó¶Ô»°ÖĞÌáÁ¶³öÄãµÄ×¨ÊôÑ§Ï°»­Ïñ¡£")
+    if st.button("? ¸ù¾İ¶Ô»°Éú³É»­Ïñ", type="primary"):
         if not any(m.get("role") == "user" for m in conv):
-            st.warning("è¯·å…ˆå’Œ AI èŠå‡ å¥ä½ çš„å­¦ä¹ æƒ…å†µï½")
+            st.warning("ÇëÏÈºÍ AI ÁÄ¼¸¾äÄãµÄÑ§Ï°Çé¿ö¡«")
         else:
             prompt = prompts.build_profile_prompt(conv)
-            with st.spinner("æ­£åœ¨æç‚¼ä½ çš„å­¦ä¹ ç”»åƒâ€¦"):
+            with st.spinner("ÕıÔÚÌáÁ¶ÄãµÄÑ§Ï°»­Ïñ¡­"):
                 try:
                     raw = llm.chat([{"role": "user", "content": prompt}])
                 except Exception as e:
-                    st.error(f"AI è°ƒç”¨å¤±è´¥ï¼š{e}")
+                    st.error(f"AI µ÷ÓÃÊ§°Ü£º{e}")
                     raw = None
             data = extract_json(raw) if raw else None
             if isinstance(data, dict):
                 storage.save_profile({**profile, **data, "completed": True})
-                st.session_state["profile_saved_msg"] = "ğŸ‰ å­¦ä¹ ç”»åƒå·²ç”Ÿæˆï¼å¯å‰å¾€ã€ŒğŸ“š èµ„æºæ¨èã€è·å–ä¸ªæ€§åŒ–èµ„æ–™ï½"
+                st.session_state["profile_saved_msg"] = "?? Ñ§Ï°»­ÏñÒÑÉú³É£¡¿ÉÇ°Íù¡¸?? ×ÊÔ´ÍÆ¼ö¡¹»ñÈ¡¸öĞÔ»¯×ÊÁÏ¡«"
                 st.rerun()
             else:
-                st.error("ç”»åƒè§£æå¤±è´¥ï¼Œè¯·é‡è¯•ï¼Œæˆ–ä½¿ç”¨ä¸Šæ–¹ã€Œæ‰‹åŠ¨ç¼–è¾‘ç”»åƒã€è¡¨å•ã€‚")
+                st.error("»­Ïñ½âÎöÊ§°Ü£¬ÇëÖØÊÔ£¬»òÊ¹ÓÃÉÏ·½¡¸ÊÖ¶¯±à¼­»­Ïñ¡¹±íµ¥¡£")
 
 
 # ============================================================================
-#                             ğŸ“š èµ„æºæ¨è
+#                             ?? ×ÊÔ´ÍÆ¼ö
 # ============================================================================
 def show_resources():
-    st.subheader("ğŸ“š èµ„æºæ¨è")
-    st.caption("æ ¹æ®ä½ çš„å­¦ä¹ ç”»åƒï¼ŒAI ä¸ºä½ æŒ‘é€‰çœŸæ­£æœ‰ç”¨çš„å­¦ä¹ èµ„æº")
+    st.subheader("?? ×ÊÔ´ÍÆ¼ö")
+    st.caption("¸ù¾İÄãµÄÑ§Ï°»­Ïñ£¬AI ÎªÄãÌôÑ¡ÕæÕıÓĞÓÃµÄÑ§Ï°×ÊÔ´")
     profile = storage.load_profile()
 
-    # ç”»åƒä¸å®Œæ•´æ—¶æ‹¦æˆª
+    # »­Ïñ²»ÍêÕûÊ±À¹½Ø
     if not profile.get("completed"):
-        st.warning("ä½ è¿˜æ²¡æœ‰å®Œå–„çš„å­¦ä¹ ç”»åƒï¼ŒAI æš‚æ—¶æ— æ³•ä¸ºä½ æ¨èèµ„æºï½")
-        st.button("ğŸ‘‰ å»ã€ŒğŸ‘¤ å­¦ä¹ ç”»åƒã€é¡µé¢å®Œå–„ç”»åƒ", on_click=go_to("ğŸ‘¤ å­¦ä¹ ç”»åƒ"), type="primary")
+        st.warning("Äã»¹Ã»ÓĞÍêÉÆµÄÑ§Ï°»­Ïñ£¬AI ÔİÊ±ÎŞ·¨ÎªÄãÍÆ¼ö×ÊÔ´¡«")
+        st.button("?? È¥¡¸?? Ñ§Ï°»­Ïñ¡¹Ò³ÃæÍêÉÆ»­Ïñ", on_click=go_to("?? Ñ§Ï°»­Ïñ"), type="primary")
         return
 
-    # ç”»åƒæ‘˜è¦
+    # »­ÏñÕªÒª
     weak = profile.get("weak_points", []) or []
     st.markdown(
-        "æ ¹æ®ä½ çš„ç”»åƒï¼š" + ("".join(chip(w, "orange") for w in weak) or "ï¼ˆæš‚æ— è–„å¼±ç‚¹è®°å½•ï¼‰")
-        + "ã€€ğŸ¯ " + (profile.get("goal") or "â€”â€”"),
+        "¸ù¾İÄãµÄ»­Ïñ£º" + ("".join(chip(w, "orange") for w in weak) or "£¨ÔİÎŞ±¡Èõµã¼ÇÂ¼£©")
+        + "¡¡?? " + (profile.get("goal") or "¡ª¡ª"),
         unsafe_allow_html=True,
     )
 
     has_res = bool(st.session_state.get("resources"))
-    btn_label = "ğŸ”„ é‡æ–°ç”Ÿæˆæ¨è" if has_res else "âœ¨ ç”Ÿæˆä¸ªæ€§åŒ–æ¨è"
+    btn_label = "?? ÖØĞÂÉú³ÉÍÆ¼ö" if has_res else "? Éú³É¸öĞÔ»¯ÍÆ¼ö"
     if st.button(btn_label, type="primary"):
         prompt = prompts.build_resource_prompt(profile)
-        with st.spinner("AI æ­£åœ¨ä¸ºä½ æŒ‘é€‰å­¦ä¹ èµ„æºâ€¦"):
+        with st.spinner("AI ÕıÔÚÎªÄãÌôÑ¡Ñ§Ï°×ÊÔ´¡­"):
             try:
                 raw = llm.chat([{"role": "user", "content": prompt}])
             except Exception as e:
-                st.error(f"AI è°ƒç”¨å¤±è´¥ï¼š{e}")
+                st.error(f"AI µ÷ÓÃÊ§°Ü£º{e}")
                 raw = None
         data = extract_json(raw) if raw else None
         if not data:
-            st.error("æ¨èç»“æœè§£æå¤±è´¥ï¼Œè¯·ç‚¹å‡»é‡æ–°ç”Ÿæˆå†è¯•ä¸€æ¬¡ã€‚")
+            st.error("ÍÆ¼ö½á¹û½âÎöÊ§°Ü£¬Çëµã»÷ÖØĞÂÉú³ÉÔÙÊÔÒ»´Î¡£")
         else:
             st.session_state["resources"] = data
             has_res = True
 
-    # å±•ç¤ºæ¨èç»“æœ
+    # Õ¹Ê¾ÍÆ¼ö½á¹û
     resources = st.session_state.get("resources")
     if resources:
-        st.markdown(f"### ä¸ºä½ æ¨è {len(resources)} ä¸ªèµ„æº")
+        st.markdown(f"### ÎªÄãÍÆ¼ö {len(resources)} ¸ö×ÊÔ´")
         for r in resources:
             with st.container(border=True):
-                st.markdown(f"**ğŸ“„ {r.get('title', 'æœªå‘½åèµ„æº')}**")
-                type_chip = chip(f"{r.get('type', 'èµ„æº')}", "purple")
+                st.markdown(f"**?? {r.get('title', 'Î´ÃüÃû×ÊÔ´')}**")
+                type_chip = chip(f"{r.get('type', '×ÊÔ´')}", "purple")
                 keywords = "".join(chip(k, "green") for k in (r.get("keywords", []) or []))
                 st.markdown(type_chip + keywords, unsafe_allow_html=True)
-                st.markdown(f"ğŸ’¡ {r.get('reason', '')}")
+                st.markdown(f"?? {r.get('reason', '')}")
     else:
-        st.info("ç‚¹å‡»ä¸Šæ–¹æŒ‰é’®ï¼Œè·å–ä¸ºä½ é‡èº«å®šåˆ¶çš„å­¦ä¹ èµ„æºï½")
+        st.info("µã»÷ÉÏ·½°´Å¥£¬»ñÈ¡ÎªÄãÁ¿Éí¶¨ÖÆµÄÑ§Ï°×ÊÔ´¡«")
 
 
 # ============================================================================
-#                              ä¸»å…¥å£
+#                              Ö÷Èë¿Ú
 # ============================================================================
 def main():
     with st.sidebar:
-        st.markdown("## ğŸ“ æ™ºå­¦ä¼´ä¾£")
-        st.caption("AI ä¸ªæ€§åŒ–å­¦ä¹ åŠ©æ‰‹ Â· æœ¬åœ°è¿è¡Œ")
+        st.markdown("## ?? ÖÇÑ§°éÂÂ")
+        st.caption("AI ¸öĞÔ»¯Ñ§Ï°ÖúÊÖ ¡¤ ±¾µØÔËĞĞ")
         st.divider()
-        page = st.radio("åŠŸèƒ½å¯¼èˆª", PAGES, key="nav_page", label_visibility="collapsed")
+        page = st.radio("¹¦ÄÜµ¼º½", PAGES, key="nav_page", label_visibility="collapsed")
         st.divider()
         if llm.DEMO_MODE:
             st.info(
-                "ğŸ§ª **æ¼”ç¤ºæ¨¡å¼**\n\n"
-                "æœªæ£€æµ‹åˆ° API Keyï¼Œæ‰€æœ‰ AI å›å¤å‡ä¸ºå†…ç½®æ¨¡æ‹Ÿæ•°æ®ã€‚\n\n"
-                "åœ¨é¡¹ç›®æ ¹ç›®å½• `.env` ä¸­é…ç½® `OPENAI_API_KEY` ç­‰å˜é‡åé‡å¯ï¼Œå³å¯å¯ç”¨çœŸå® AIã€‚"
+                "?? **ÑİÊ¾Ä£Ê½**\n\n"
+                "Î´¼ì²âµ½ API Key£¬ËùÓĞ AI »Ø¸´¾ùÎªÄÚÖÃÄ£ÄâÊı¾İ¡£\n\n"
+                "ÔÚÏîÄ¿¸ùÄ¿Â¼ `.env` ÖĞÅäÖÃ `OPENAI_API_KEY` µÈ±äÁ¿ºóÖØÆô£¬¼´¿ÉÆôÓÃÕæÊµ AI¡£"
             )
         else:
-            st.success(f"ğŸ¤– å·²è¿æ¥æ¨¡å‹\n\n`{llm.CHAT_MODEL_NAME}`")
+            st.success(f"?? ÒÑÁ¬½ÓÄ£ĞÍ\n\n`{llm.CHAT_MODEL_NAME}`")
         st.divider()
-        st.caption("ğŸ’¾ æ•°æ®ä¿å­˜åœ¨æœ¬åœ° data/ ç›®å½•ï¼Œä¸ä¸Šä¼ ä»»ä½•éšç§ä¿¡æ¯ã€‚")
+        st.caption("?? Êı¾İ±£´æÔÚ±¾µØ data/ Ä¿Â¼£¬²»ÉÏ´«ÈÎºÎÒşË½ĞÅÏ¢¡£")
 
-    if page == "ğŸ  é¦–é¡µ":
+    if page == "?? Ê×Ò³":
         show_home()
-    elif page == "ğŸ“¸ AIé”™é¢˜æœ¬":
+    elif page == "?? AI´íÌâ±¾":
         show_mistake_book()
-    elif page == "ğŸ‘¤ å­¦ä¹ ç”»åƒ":
+    elif page == "?? Ñ§Ï°»­Ïñ":
         show_profile()
     else:
         show_resources()
