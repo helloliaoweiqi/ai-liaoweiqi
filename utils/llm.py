@@ -15,7 +15,7 @@ import json
 import os
 import re
 
-DEMO_MODE=Ture
+DEMO_MODE=True
 
 # 读取 .env 配置（若未安装 python-dotenv，也不影响演示模式运行）
 try:
