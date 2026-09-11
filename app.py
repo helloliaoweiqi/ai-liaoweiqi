@@ -5,11 +5,10 @@ import json
 import uuid
 
 import streamlit as st
+
 from utils import llm
 from utils import prompts
 from utils import storage
-
-st.write("ok!")
  
 st.set_page_config(
     page_title="智学伴侣?AI个性化学习助手",
