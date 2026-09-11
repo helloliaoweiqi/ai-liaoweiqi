@@ -22,6 +22,8 @@ MISTAKES_FILE = os.path.join(DATA_DIR, "mistakes.json")
 CONVERSATION_FILE = os.path.join(DATA_DIR, "conversation.json")
 IMAGE_DIR = os.path.join(DATA_DIR, "images")
 
+os.makedirs(DATA_DIR, exist_ok=True)
+
 # 默认学生画像结构（completed 表示画像是否已经生成过）
 _DEFAULT_PROFILE = {
     "grade": "",

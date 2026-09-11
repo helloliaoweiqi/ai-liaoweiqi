@@ -1,4 +1,3 @@
-DEMO_MODE=Ture
 # -*- coding: utf-8 -*-
 """
 llm.py —— 大模型调用封装模块
@@ -15,6 +14,8 @@ import io
 import json
 import os
 import re
+
+DEMO_MODE=Ture
 
 # 读取 .env 配置（若未安装 python-dotenv，也不影响演示模式运行）
 try:
