@@ -6,12 +6,11 @@ import uuid
 
 import streamlit as st
 from utils import llm, prompts, storage
-# ---------------- 页面基础配置 ----------------
+
 st.set_page_config(
-    page_title="智学伴侣 - AI个性化学习助手",
-    page_icon="🎓",
-    layout="wide",
-    initial_sidebar_state="expanded",
+    page_title="智学伴侣‑AI个性化学习助手",
+    page_icon="📚",
+    layout="wide"
 )
 
 PAGES = ["🏠 首页", "📸 AI错题本", "👤 学习画像", "📚 资源推荐"]
